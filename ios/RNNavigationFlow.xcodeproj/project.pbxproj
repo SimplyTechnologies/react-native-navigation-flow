@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CC1461AF201A1B9300ACB57F /* ReactNavigationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1461AE201A1B9300ACB57F /* ReactNavigationFlow.swift */; };
 		CC1461B1201A1BDD00ACB57F /* NavigationFlowBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1461B0201A1BDD00ACB57F /* NavigationFlowBridge.m */; };
+		CC1461F1201A303500ACB57F /* ReactNavigationGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1461F0201A303500ACB57F /* ReactNavigationGateway.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,7 @@
 		CC1461AD201A1B9300ACB57F /* RNNavigationFlow-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNNavigationFlow-Bridging-Header.h"; sourceTree = "<group>"; };
 		CC1461AE201A1B9300ACB57F /* ReactNavigationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNavigationFlow.swift; sourceTree = "<group>"; };
 		CC1461B0201A1BDD00ACB57F /* NavigationFlowBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationFlowBridge.m; sourceTree = "<group>"; };
+		CC1461F0201A303500ACB57F /* ReactNavigationGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNavigationGateway.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +54,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				CC1461F0201A303500ACB57F /* ReactNavigationGateway.swift */,
 				CC1461B0201A1BDD00ACB57F /* NavigationFlowBridge.m */,
 				CC1461AE201A1B9300ACB57F /* ReactNavigationFlow.swift */,
 				134814211AA4EA7D00B7C361 /* Products */,
@@ -117,6 +120,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC1461B1201A1BDD00ACB57F /* NavigationFlowBridge.m in Sources */,
+				CC1461F1201A303500ACB57F /* ReactNavigationGateway.swift in Sources */,
 				CC1461AF201A1B9300ACB57F /* ReactNavigationFlow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

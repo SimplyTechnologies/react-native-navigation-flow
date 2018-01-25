@@ -14,6 +14,7 @@ class ReactNavigationFlow: NSObject {
   @objc
   public func registerScreen(_ screenName: String, properties: [String: AnyObject]) {
     // TODO
+    ReactNavigationGateway.shared.registerScreen(screenName, properties: properties)
   }
   
   @objc
