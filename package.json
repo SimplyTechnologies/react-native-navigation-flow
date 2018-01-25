@@ -1,4 +1,3 @@
-
 {
   "name": "react-native-navigation-flow",
   "version": "1.0.0",
@@ -14,5 +13,8 @@
   "license": "",
   "peerDependencies": {
     "react-native": "^0.41.2"
+  },
+  "dependencies": {
+    "react-native-safe-module": "^1.2.0"
   }
 }
