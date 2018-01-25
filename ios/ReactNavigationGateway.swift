@@ -8,6 +8,13 @@
 
 import Foundation
 
+private var _id = 0
+
+private func generateId() -> String {
+  _id = _id + 1
+  return "\(_id)"
+}
+
 open class ReactNavigationGateway: NSObject {
     var screenProperties: [String: [String: AnyObject]] = [:]
     
