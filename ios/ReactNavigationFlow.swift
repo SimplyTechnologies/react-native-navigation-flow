@@ -11,10 +11,16 @@ import Foundation
 @objc(ReactNavigationFlow)
 class ReactNavigationFlow: NSObject {
 
+  private var navigationGateway: ReactNavigationGateway!
+  override init() {
+      super.init()
+      navigationGateway = ReactNavigationGateway.shared
+  }
+
   @objc
   public func registerScreen(_ screenName: String, properties: [String: AnyObject]) {
     // TODO
-    ReactNavigationGateway.shared.registerScreen(screenName, properties: properties)
+    self.navigationGateway.registerScreen(screenName, properties: properties)
   }
   
   @objc

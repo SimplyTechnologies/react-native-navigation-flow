@@ -10,6 +10,7 @@
 		CC1461AF201A1B9300ACB57F /* ReactNavigationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1461AE201A1B9300ACB57F /* ReactNavigationFlow.swift */; };
 		CC1461B1201A1BDD00ACB57F /* NavigationFlowBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = CC1461B0201A1BDD00ACB57F /* NavigationFlowBridge.m */; };
 		CC1461F1201A303500ACB57F /* ReactNavigationGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1461F0201A303500ACB57F /* ReactNavigationGateway.swift */; };
+		CC1461F5201A6B5900ACB57F /* ReactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1461F4201A6B5900ACB57F /* ReactViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +31,7 @@
 		CC1461AE201A1B9300ACB57F /* ReactNavigationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNavigationFlow.swift; sourceTree = "<group>"; };
 		CC1461B0201A1BDD00ACB57F /* NavigationFlowBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NavigationFlowBridge.m; sourceTree = "<group>"; };
 		CC1461F0201A303500ACB57F /* ReactNavigationGateway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNavigationGateway.swift; sourceTree = "<group>"; };
+		CC1461F4201A6B5900ACB57F /* ReactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				CC1461F4201A6B5900ACB57F /* ReactViewController.swift */,
 				CC1461F0201A303500ACB57F /* ReactNavigationGateway.swift */,
 				CC1461B0201A1BDD00ACB57F /* NavigationFlowBridge.m */,
 				CC1461AE201A1B9300ACB57F /* ReactNavigationFlow.swift */,
@@ -120,6 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC1461B1201A1BDD00ACB57F /* NavigationFlowBridge.m in Sources */,
+				CC1461F5201A6B5900ACB57F /* ReactViewController.swift in Sources */,
 				CC1461F1201A303500ACB57F /* ReactNavigationGateway.swift in Sources */,
 				CC1461AF201A1B9300ACB57F /* ReactNavigationFlow.swift in Sources */,
 			);
