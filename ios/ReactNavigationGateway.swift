@@ -45,7 +45,7 @@ private func generateId() -> String {
 
 open class ReactNavigationGateway: NSObject {
   private var screenProperties: [String: [String: AnyObject]] = [:]
-  public var bridge = RCTBridge()
+  public var bridge: RCTBridge?
   public var delegate: ReactNavigationGatewayDelegate?
 
   public static var shared = ReactNavigationGateway()

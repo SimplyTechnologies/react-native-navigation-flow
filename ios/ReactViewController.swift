@@ -93,8 +93,6 @@ class ReactViewController: UIViewController {
     } else {
       args = [name as AnyObject]
     }
-    self.gateway.bridge.enqueueJSCall("RCTDeviceEventEmitter.emit", args: args)
+    self.gateway.bridge?.enqueueJSCall("RCTDeviceEventEmitter.emit", args: args)
   }
-
-  
 }
