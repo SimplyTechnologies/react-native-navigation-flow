@@ -8,6 +8,29 @@
 
 import Foundation
 
+@objc public enum NavigationFlowResultCode: Int {
+  case cancelled = 0
+  case ok = -1
+  
+  public static func isOk(_ value: Int?) -> Bool {
+    if value != nil {
+      return NavigationFlowResultCode(rawValue: value!) == .ok
+    }
+    return false
+  }
+}
+
+
+@objc public protocol ReactNavigationGatewayDelegate {
+  func rootViewController(gateway: ReactNavigationGateway) -> UIViewController?
+}
+
+@objc public protocol NavigationGatewayFLowProtocol: class {
+  @objc var reactFlowId: String? { get set }
+  @objc func start(_ props: [String: AnyObject]?)
+  
+  @objc func finish(_ resultCode: NavigationFlowResultCode, payload: [String: AnyObject]?)
+}
 
 private var _id = 0
 
@@ -23,6 +46,8 @@ private func generateId() -> String {
 open class ReactNavigationGateway: NSObject {
   private var screenProperties: [String: [String: AnyObject]] = [:]
   public var bridge = RCTBridge()
+  public var delegate: ReactNavigationGatewayDelegate?
+
   public static var shared = ReactNavigationGateway()
   private var viewControllers: [String: ReactViewControllerHolder]!
 
@@ -38,7 +63,16 @@ open class ReactNavigationGateway: NSObject {
   public func getScreenProperties(_ screenName: String) -> [String: AnyObject]? {
     return screenProperties[screenName]
   }
+
   func registerViewController(_ viewController: ReactViewController) {
     viewControllers[viewController.navigationInstanceId] = ReactViewControllerHolder(controller: viewController)
+  }
+  
+  public func topViewController() -> UIViewController? {
+    guard
+      let vc = self.delegate?.rootViewController(gateway: self)
+      else { return nil}
+    
+    return vc.topMostViewController()
   }
 }

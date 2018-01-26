@@ -16,7 +16,7 @@ class ReactNavigationFlow: NSObject {
   private var navigationGateway: ReactNavigationGateway!
   override init() {
       super.init()
-      navigationGateway = ReactNavigationGateway.shared
+      self.navigationGateway = ReactNavigationGateway.shared
   }
   
   func constantsToExport() -> [String: Any] {
