@@ -8,6 +8,8 @@
 
 import Foundation
 
+private let VERSION: Int8 = 1
+
 @objc(ReactNavigationFlow)
 class ReactNavigationFlow: NSObject {
 
@@ -15,6 +17,12 @@ class ReactNavigationFlow: NSObject {
   override init() {
       super.init()
       navigationGateway = ReactNavigationGateway.shared
+  }
+  
+  func constantsToExport() -> [String: Any] {
+    return [
+      "VERSION": VERSION
+    ]
   }
 
   @objc
