@@ -20,12 +20,11 @@ import Foundation
   }
 }
 
-
 @objc public protocol ReactNavigationGatewayDelegate {
   func rootViewController(gateway: ReactNavigationGateway) -> UIViewController?
 }
 
-@objc public protocol NavigationGatewayFLowProtocol: class {
+@objc public protocol NavigationGatewayFlowProtocol: class {
   @objc var reactFlowId: String? { get set }
   @objc func start(_ props: [String: AnyObject]?)
   
