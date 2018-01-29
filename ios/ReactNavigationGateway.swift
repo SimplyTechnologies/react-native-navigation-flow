@@ -84,4 +84,8 @@ open class ReactNavigationGateway: NSObject {
   func viewController(forId id: String) -> ReactViewController? {
     return self.viewControllers[id]?.controller
   }
+  
+  func unregisterController(_ instanceId: String) -> ReactViewControllerHolder? {
+    return viewControllers.removeValue(forKey: instanceId)
+  }
 }

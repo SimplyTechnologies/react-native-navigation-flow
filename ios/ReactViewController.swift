@@ -67,6 +67,10 @@ class ReactViewController: UIViewController {
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
+  deinit {
+    self.gateway.unregisterController(self.navigationInstanceId)
+  }
 
   override public var prefersStatusBarHidden : Bool {
     return statusBarHidden
