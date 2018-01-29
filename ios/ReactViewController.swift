@@ -41,7 +41,7 @@ class ReactViewController: UIViewController {
   private var renderConfig: [String: AnyObject]
   private var statusBarHidden: Bool = false
   private var statusBarStyle = UIStatusBarStyle.default
-  private var rendered = false
+  private var reactRootRendered = false
 
   public convenience init(sceneName: String) {
     self.init(sceneName: sceneName, props: [:])
@@ -62,6 +62,7 @@ class ReactViewController: UIViewController {
       self.initialConfig = currentConfig
       self.renderConfig = currentConfig
     }
+    self.props = wrapProps(props, self.navigationInstanceId)
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -84,6 +85,7 @@ class ReactViewController: UIViewController {
   override open func loadView() {
     self.gateway.registerViewController(self)
     
+    print("RNNF: Start Controller with props \(self.props)")
     self.view = RCTRootView(
       bridge: self.gateway.bridge,
       moduleName: self.sceneName,
@@ -116,8 +118,8 @@ class ReactViewController: UIViewController {
   }
   
   public func markAsRendered() {
-    self.rendered = true
-    print("Rendered \(self.navigationInstanceId)")
+    self.reactRootRendered = true
+    print("RNNF: Rendered \(self.navigationInstanceId)")
     // TODO Render Now
   }
 }

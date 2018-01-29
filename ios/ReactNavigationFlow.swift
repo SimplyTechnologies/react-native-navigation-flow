@@ -37,8 +37,15 @@ class ReactNavigationFlow: NSObject {
   }
   
   @objc
-  public func push(_ screenName: String, properties: [String: AnyObject]) {
+  public func push(_ screenName: String, properties: NSDictionary) {
     // TODO
+    print("RNNF: Push has been called \(screenName) \(properties)")
+    let vc = self.navigationGateway.topViewController()
+    let nextVC = ReactViewController(sceneName: screenName)
+    // TODO - Pass data
+    DispatchQueue.main.async {
+      vc?.navigationController?.pushViewController(nextVC, animated: properties.object(forKey: "animated") as? Bool ?? true)
+    }
   }
   
   @objc

@@ -70,6 +70,7 @@ open class ReactNavigationGateway: NSObject {
   }
 
   func registerViewController(_ viewController: ReactViewController) {
+    print("RNNF: Registered View Controller \(viewController.navigationInstanceId)")
     viewControllers[viewController.navigationInstanceId] = ReactViewControllerHolder(controller: viewController)
   }
   
