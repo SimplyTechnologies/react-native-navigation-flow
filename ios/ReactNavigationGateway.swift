@@ -34,7 +34,7 @@ import Foundation
 
 private var _id = 0
 
-private struct ReactViewControllerHolder {
+public struct ReactViewControllerHolder {
   weak var controller: ReactViewController?
 }
 
@@ -45,21 +45,27 @@ private func generateId() -> String {
 
 open class ReactNavigationGateway: NSObject {
   private var screenProperties: [String: [String: AnyObject]] = [:]
+  private var screenRenderOptions: [String: [String: AnyObject]] = [:]
+
   public var bridge: RCTBridge?
   public var delegate: ReactNavigationGatewayDelegate?
 
   public static var shared = ReactNavigationGateway()
-  private var viewControllers: [String: ReactViewControllerHolder]!
+  public var viewControllers: [String: ReactViewControllerHolder]! = [:]
 
   // Keep Registered screen's properties
-  public func registerScreen(_ screenName: String, properties: [String: AnyObject]?) {
+  public func registerScreen(_ screenName: String, properties: [String: AnyObject]?, waitForRender: Bool) {
     var props: [String: AnyObject] = [:]
     
     if properties != nil {
       props = properties!
     }
     screenProperties[screenName] = props
+    screenRenderOptions[screenName] = [
+      "waitForRender": waitForRender as AnyObject
+    ]
   }
+
   public func getScreenProperties(_ screenName: String) -> [String: AnyObject]? {
     return screenProperties[screenName]
   }
@@ -74,5 +80,9 @@ open class ReactNavigationGateway: NSObject {
       else { return nil}
     
     return vc.topMostViewController()
+  }
+  
+  func viewController(forId id: String) -> ReactViewController? {
+    return self.viewControllers[id]?.controller
   }
 }

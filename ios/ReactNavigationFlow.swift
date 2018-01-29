@@ -30,9 +30,10 @@ class ReactNavigationFlow: NSObject {
   }
 
   @objc
-  public func registerScreen(_ screenName: String, properties: [String: AnyObject]) {
+  public func registerScreen(_ screenName: String, properties: [String: AnyObject], waitForRender: Bool) {
     // TODO
-    self.navigationGateway.registerScreen(screenName, properties: properties)
+    print("RNNF: \(screenName) has been registered with properties \(properties)")
+    self.navigationGateway.registerScreen(screenName, properties: properties, waitForRender: waitForRender)
   }
   
   @objc
@@ -53,5 +54,11 @@ class ReactNavigationFlow: NSObject {
   @objc
   public func dismiss(_ animated: Bool) {
     // TODO
+  }
+  
+  @objc
+  public func firstRenderComplete(_ navFlowInstanceId: String) {
+    let vc = self.navigationGateway.viewController(forId: navFlowInstanceId)
+    vc?.markAsRendered()
   }
 }
