@@ -21,7 +21,11 @@ class ReactNavigationFlow: NSObject {
   
   func constantsToExport() -> [String: Any] {
     return [
-      "VERSION": VERSION
+      "VERSION": VERSION,
+      "instanceIdKey": mNativeNavigationInstanceId,
+      "events": [
+        "didMount": "sceneDidMount"
+      ]
     ]
   }
 
