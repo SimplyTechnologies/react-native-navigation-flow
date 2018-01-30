@@ -67,13 +67,32 @@ class ReactNavigationFlow: NSObject {
   }
   
   @objc
-  public func present(_ screenName: String, properties: [String: AnyObject]) {
-    // TODO
+  public func present(_ screenName: String, props: [String: AnyObject], options: [String: AnyObject], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    print("RNNF: Present has been called \(screenName) \(props) \(options)")
+
+    guard
+      let vc = self.navigationGateway.topViewController() as? ReactViewController
+      else { return }
+    let nextVC = ReactViewController(sceneName: screenName, props: props)
+    nextVC.delegate = vc.delegate
+    self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
+    // TODO - Pass data
+    DispatchQueue.main.async {
+      vc.present(nextVC, animated: props["animated"] as? Bool ?? true, completion: nil)
+    }
   }
   
   @objc
-  public func dismiss(_ animated: Bool) {
-    // TODO
+  public func dismiss(_ payload: [String: AnyObject], options: [String: AnyObject]) {
+    print("RNNF: Dismiss has been called \(payload) \(options)")
+    guard
+      let vc = self.navigationGateway.topViewController() as? ReactViewController
+      else { return }
+
+    DispatchQueue.main.async {
+      vc.dismiss(animated: options["animated"] as? Bool ?? true, completion: nil)
+      vc.dismiss(payload, animated: options["animated"] as? Bool ?? true)
+    }
   }
   
   @objc
