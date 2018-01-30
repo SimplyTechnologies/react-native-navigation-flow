@@ -100,9 +100,15 @@ class ReactViewController: UIViewController {
       moduleName: self.sceneName,
       initialProperties: self.props
     )
+
     if let screenColor = colorForKey("screenColor", initialConfig) {
       self.view.backgroundColor = screenColor
     }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.emitEvent("willDisappear", data: nil)
   }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -114,6 +120,7 @@ class ReactViewController: UIViewController {
       self.finish(.ok, payload: leavePayload)
     }
     leavePayload = [:]
+    self.emitEvent("didDisappear", data: nil)
   }
   
   override func viewDidLoad() {
@@ -123,11 +130,17 @@ class ReactViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    self.emitEvent("willAppear", data: nil)
     print("RNNF: View Will appear \(self.navigationInstanceId)")
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.emitEvent("didAppear", data: nil)
+  }
+  
   public func emitEvent(_ eventName: String, data: AnyObject?) {
-    let name = String(format: "NavigationFlowScreen-%@.%@", eventName, self.navigationInstanceId)
+    let name = String(format: "NavigationFlowScreen-%@-%@", eventName, self.navigationInstanceId)
     let args: [AnyObject]
     if let payload = data {
       args = [name as AnyObject, payload]
