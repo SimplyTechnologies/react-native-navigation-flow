@@ -13,6 +13,7 @@
 		CC1461F5201A6B5900ACB57F /* ReactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1461F4201A6B5900ACB57F /* ReactViewController.swift */; };
 		CC3EB430201B19F700C9F4D4 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3EB42F201B19F700C9F4D4 /* Utilities.swift */; };
 		CC3EB434201B226500C9F4D4 /* UIViewController+ TopMostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3EB433201B226500C9F4D4 /* UIViewController+ TopMostViewController.swift */; };
+		CC93254E20204BB700D6A228 /* ReactPromise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC93254D20204BB700D6A228 /* ReactPromise.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +37,7 @@
 		CC1461F4201A6B5900ACB57F /* ReactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactViewController.swift; sourceTree = "<group>"; };
 		CC3EB42F201B19F700C9F4D4 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		CC3EB433201B226500C9F4D4 /* UIViewController+ TopMostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ TopMostViewController.swift"; sourceTree = "<group>"; };
+		CC93254D20204BB700D6A228 /* ReactPromise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactPromise.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				CC93254D20204BB700D6A228 /* ReactPromise.swift */,
 				CC3EB433201B226500C9F4D4 /* UIViewController+ TopMostViewController.swift */,
 				CC3EB42F201B19F700C9F4D4 /* Utilities.swift */,
 				CC1461F4201A6B5900ACB57F /* ReactViewController.swift */,
@@ -131,6 +134,7 @@
 				CC1461B1201A1BDD00ACB57F /* NavigationFlowBridge.m in Sources */,
 				CC3EB434201B226500C9F4D4 /* UIViewController+ TopMostViewController.swift in Sources */,
 				CC1461F5201A6B5900ACB57F /* ReactViewController.swift in Sources */,
+				CC93254E20204BB700D6A228 /* ReactPromise.swift in Sources */,
 				CC1461F1201A303500ACB57F /* ReactNavigationGateway.swift in Sources */,
 				CC3EB430201B19F700C9F4D4 /* Utilities.swift in Sources */,
 				CC1461AF201A1B9300ACB57F /* ReactNavigationFlow.swift in Sources */,

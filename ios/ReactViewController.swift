@@ -26,15 +26,21 @@ func wrapProps(
   _ props: [String: AnyObject],
   _ nativeNavigationInstanceId: String
 ) -> [String: AnyObject] {
-  var mProps = props
+  var mProps = [
+    "data": (props as AnyObject)
+  ]
   mProps[mNativeNavigationInstanceId] = nativeNavigationInstanceId as AnyObject?
   return mProps
+}
+
+protocol ReactViewControllerDelegate: class {
+  func didDismiss(_ payload: [String: AnyObject]?)
 }
 
 class ReactViewController: UIViewController {
   public var navigationInstanceId: String
   private var reactViewHasBeenRendered: Bool = false
-  private var sceneName: String!
+  fileprivate var sceneName: String!
   private let gateway = ReactNavigationGateway.shared
   private var props: [String: AnyObject]
   private var initialConfig: [String: AnyObject]
@@ -42,6 +48,9 @@ class ReactViewController: UIViewController {
   private var statusBarHidden: Bool = false
   private var statusBarStyle = UIStatusBarStyle.default
   private var reactRootRendered = false
+  public var navigationCurrentFlowId: String?
+  public var delegate: ReactViewControllerDelegate?
+  private var leavePayload: [String: AnyObject]?
 
   public convenience init(sceneName: String) {
     self.init(sceneName: sceneName, props: [:])
@@ -96,6 +105,17 @@ class ReactViewController: UIViewController {
     }
   }
   
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    if self.isBeingDismissed {
+      self.finish(.ok, payload: leavePayload)
+    }
+    if self.isMovingFromParentViewController {
+      self.finish(.ok, payload: leavePayload)
+    }
+    leavePayload = [:]
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     print("RNNF: View Did Loaded \(self.navigationInstanceId)")
@@ -121,5 +141,20 @@ class ReactViewController: UIViewController {
     self.reactRootRendered = true
     print("RNNF: Rendered \(self.navigationInstanceId)")
     // TODO Render Now
+  }
+  
+  public func dismiss(_ payload: [String: AnyObject], animated: Bool?) {
+    leavePayload = payload
+    self.delegate?.didDismiss(payload)
+  }
+}
+
+extension ReactViewController: NavigationGatewayFlowProtocol {
+  func start(_ props: [String : AnyObject]?) {
+    
+  }
+  
+  func finish(_ resultCode: NavigationFlowResultCode, payload: [String : AnyObject]?) {
+    ReactNavigationGateway.shared.finishFlow(self, resultCode: resultCode, payload: payload)
   }
 }

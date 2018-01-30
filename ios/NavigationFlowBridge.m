@@ -19,14 +19,19 @@ RCT_EXTERN_METHOD(registerScreen:(NSString *)sceneName
                   waitForRender: (BOOL *)waitForRender)
 
 RCT_EXTERN_METHOD(push:(NSString *)sceneName
-                  properties:(NSDictionary *)properties)
+                  props:(NSDictionary *)props
+                  options:(NSDictionary *)options
+                  resolve:(RCTPromiseResolveBlock)resolve
+                  reject:(RCTPromiseRejectBlock)reject)
 
 RCT_EXTERN_METHOD(present:(NSString *)screenName
                   properties:(NSDictionary *)properties)
 
 RCT_EXTERN_METHOD(firstRenderComplete:(NSString *)navFlowInstanceId)
 
-RCT_EXTERN_METHOD(pop:(BOOL)animated)
+RCT_EXTERN_METHOD(pop:(NSDictionary *)payload
+                  options:(NSDictionary *)options)
+
 RCT_EXTERN_METHOD(dismiss:(BOOL)animated)
 
 @end

@@ -25,7 +25,7 @@ import Foundation
 }
 
 @objc public protocol NavigationGatewayFlowProtocol: class {
-  @objc var reactFlowId: String? { get set }
+  @objc var navigationCurrentFlowId: String? { get set }
   @objc func start(_ props: [String: AnyObject]?)
   
   @objc func finish(_ resultCode: NavigationFlowResultCode, payload: [String: AnyObject]?)
@@ -43,14 +43,21 @@ private func generateId() -> String {
 }
 
 open class ReactNavigationGateway: NSObject {
-  private var screenProperties: [String: [String: AnyObject]] = [:]
-  private var screenRenderOptions: [String: [String: AnyObject]] = [:]
+  private var screenProperties: [String: [String: AnyObject]]
+  private var screenRenderOptions: [String: [String: AnyObject]]
+  fileprivate var promises: [String: ReactPromise]
+  public var viewControllers: [String: ReactViewControllerHolder]!
 
   public var bridge: RCTBridge?
   public var delegate: ReactNavigationGatewayDelegate?
-
   public static var shared = ReactNavigationGateway()
-  public var viewControllers: [String: ReactViewControllerHolder]! = [:]
+  
+  override public init() {
+    screenProperties = [:]
+    screenRenderOptions = [:]
+    viewControllers = [:]
+    promises = [:]
+  }
 
   // Keep Registered screen's properties
   public func registerScreen(_ screenName: String, properties: [String: AnyObject]?, waitForRender: Bool) {
@@ -82,11 +89,36 @@ open class ReactNavigationGateway: NSObject {
     return vc.topMostViewController()
   }
   
+  public func topNavigationController() -> UINavigationController? {
+    return self.topViewController()?.navigationController
+  }
+  
   func viewController(forId id: String) -> ReactViewController? {
     return self.viewControllers[id]?.controller
   }
   
   func unregisterController(_ instanceId: String) -> ReactViewControllerHolder? {
     return viewControllers.removeValue(forKey: instanceId)
+  }
+  func registerNavigationFlow(_ viewController: ReactViewController, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    let navFlowId = generateId()
+    viewController.navigationCurrentFlowId = navFlowId
+    promises[navFlowId] = ReactPromise(resolve: resolve, reject: reject)
+  }
+  
+  func finishFlow(_ viewController: NavigationGatewayFlowProtocol, resultCode: NavigationFlowResultCode, payload: [String: AnyObject]?) {
+    guard
+      let flowId = viewController.navigationCurrentFlowId
+      else { return }
+    
+    guard
+      let promise = promises[flowId]
+      else { return }
+    
+    promise.resolve([
+      "code": resultCode as AnyObject,
+      "payload": payload as AnyObject
+    ])
+    promises[flowId] = nil
   }
 }

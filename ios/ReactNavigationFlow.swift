@@ -37,20 +37,33 @@ class ReactNavigationFlow: NSObject {
   }
   
   @objc
-  public func push(_ screenName: String, properties: NSDictionary) {
+  public func push(_ screenName: String, props: [String: AnyObject], options: [String: AnyObject], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     // TODO
-    print("RNNF: Push has been called \(screenName) \(properties)")
-    let vc = self.navigationGateway.topViewController()
-    let nextVC = ReactViewController(sceneName: screenName)
+    print("RNNF: Push has been called \(screenName) \(props) \(options)")
+    guard
+      let vc = self.navigationGateway.topViewController() as? ReactViewController
+      else { return }
+    let nextVC = ReactViewController(sceneName: screenName, props: props)
+    nextVC.delegate = vc.delegate
+    self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
     // TODO - Pass data
     DispatchQueue.main.async {
-      vc?.navigationController?.pushViewController(nextVC, animated: properties.object(forKey: "animated") as? Bool ?? true)
+      vc.navigationController?.pushViewController(nextVC, animated: props["animated"] as? Bool ?? true)
     }
   }
   
   @objc
-  public func pop(_ animated: Bool) {
-    // TODO
+  public func pop(_ payload: [String: AnyObject], options: [String: AnyObject]) {
+    print("RNNF: Pop has been called \(payload) \(options)")
+    guard
+      let vc = self.navigationGateway.topViewController() as? ReactViewController
+      else { return }
+
+    let nav = self.navigationGateway.topNavigationController()
+    DispatchQueue.main.async {
+      nav?.popViewController(animated: options["animated"] as? Bool ?? true)
+      vc.dismiss(payload, animated: options["animated"] as? Bool ?? true)
+    }
   }
   
   @objc
