@@ -43,8 +43,9 @@ class ReactNavigationFlow: NSObject {
     guard
       let vc = self.navigationGateway.topViewController() as? ReactViewController
       else { return }
-    let nextVC = ReactViewController(sceneName: screenName, props: props)
+    let nextVC = ReactViewController(sceneName: screenName, props: props, options: options)
     nextVC.delegate = vc.delegate
+    nextVC.modalPresentationStyle = getModalPresentationStyle(from: options)
     self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
     // TODO - Pass data
     DispatchQueue.main.async {
@@ -73,12 +74,14 @@ class ReactNavigationFlow: NSObject {
     guard
       let vc = self.navigationGateway.topViewController() as? ReactViewController
       else { return }
-    let nextVC = ReactViewController(sceneName: screenName, props: props)
+    let nextVC = ReactViewController(sceneName: screenName, props: props, options: options)
+    let navVC = UINavigationController(rootViewController: nextVC)
     nextVC.delegate = vc.delegate
+    navVC.modalPresentationStyle = getModalPresentationStyle(from: options)
     self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
     // TODO - Pass data
     DispatchQueue.main.async {
-      vc.present(nextVC, animated: props["animated"] as? Bool ?? true, completion: nil)
+      vc.present(navVC, animated: props["animated"] as? Bool ?? true, completion: nil)
     }
   }
   

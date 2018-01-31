@@ -9,11 +9,25 @@
 import Foundation
 
 func colorForKey(_ key: String, _ props: [String: AnyObject]) -> UIColor? {
-    guard let val = props[key] as? NSNumber else { return nil }
-    let argb: UInt = val.uintValue;
-    let a = CGFloat((argb >> 24) & 0xFF) / 255.0;
-    let r = CGFloat((argb >> 16) & 0xFF) / 255.0;
-    let g = CGFloat((argb >> 8) & 0xFF) / 255.0;
-    let b = CGFloat(argb & 0xFF) / 255.0;
-    return UIColor(red: r, green: g, blue: b, alpha: a)
+  guard let val = props[key] else { return nil }
+  return RCTConvert.uiColor(val)
+}
+
+func getModalPresentationStyle(from options: [String: AnyObject]) -> UIModalPresentationStyle {
+  guard let modalPresentationStyle = options["modalPresentationStyle"] as? String else {
+    return .fullScreen
+  }
+
+  switch modalPresentationStyle {
+  case "overCurrentContext": return .overCurrentContext
+  case "currentContext":     return .currentContext
+  case "overFullScreen":     return .overFullScreen
+  case "fullScreen":         return .fullScreen
+  case "formSheet":          return .formSheet
+  case "pageSheet":          return .pageSheet
+  case "popover":            return .popover
+  case "custom":             return .custom
+  case "none":               return .none
+  default:                   return .fullScreen
+  }
 }

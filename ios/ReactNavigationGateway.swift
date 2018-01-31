@@ -61,12 +61,7 @@ open class ReactNavigationGateway: NSObject {
 
   // Keep Registered screen's properties
   public func registerScreen(_ screenName: String, properties: [String: AnyObject]?, waitForRender: Bool) {
-    var props: [String: AnyObject] = [:]
-    
-    if properties != nil {
-      props = properties!
-    }
-    screenProperties[screenName] = props
+    screenProperties[screenName] = properties ?? [:]
     screenRenderOptions[screenName] = [
       "waitForRender": waitForRender as AnyObject
     ]

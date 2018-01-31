@@ -10,7 +10,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTRootView.h>
 #import <React/RCTBundleURLProvider.h>
-
+#import <React/RCTConvert.h>
 #import <UIKit/UIKit.h>
 
 #endif
