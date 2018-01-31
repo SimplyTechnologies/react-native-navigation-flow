@@ -43,6 +43,7 @@ class ReactViewController: UIViewController {
   fileprivate var sceneName: String!
   private let gateway = ReactNavigationGateway.shared
   private var props: [String: AnyObject]
+  private var options: [String: AnyObject]
   private var initialConfig: [String: AnyObject]
   private var renderConfig: [String: AnyObject]
   private var statusBarHidden: Bool = false
@@ -53,13 +54,14 @@ class ReactViewController: UIViewController {
   private var leavePayload: [String: AnyObject]?
 
   public convenience init(sceneName: String) {
-    self.init(sceneName: sceneName, props: [:])
+    self.init(sceneName: sceneName, props: [:], options: [:])
   }
   
-  public init(sceneName: String, props: [String: AnyObject]) {
+  public init(sceneName: String, props: [String: AnyObject], options: [String: AnyObject]) {
     self.navigationInstanceId = generateId(sceneName)
     self.sceneName = sceneName
-    
+
+    self.options = options
     self.props = EMPTY_MAP
     self.initialConfig = EMPTY_MAP
     self.renderConfig = EMPTY_MAP
@@ -105,12 +107,30 @@ class ReactViewController: UIViewController {
       self.view.backgroundColor = screenColor
     }
   }
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    print("RNNF: View Did Loaded \(self.navigationInstanceId)")
+  }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.emitEvent("willAppear", data: nil)
+
+    self.updateView()
+    print("RNNF: View Will appear \(self.navigationInstanceId)")
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.emitEvent("didAppear", data: nil)
+  }
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     self.emitEvent("willDisappear", data: nil)
   }
-  
+
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
     if self.isBeingDismissed {
@@ -122,23 +142,7 @@ class ReactViewController: UIViewController {
     leavePayload = [:]
     self.emitEvent("didDisappear", data: nil)
   }
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    print("RNNF: View Did Loaded \(self.navigationInstanceId)")
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.emitEvent("willAppear", data: nil)
-    print("RNNF: View Will appear \(self.navigationInstanceId)")
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    self.emitEvent("didAppear", data: nil)
-  }
-  
+
   public func emitEvent(_ eventName: String, data: AnyObject?) {
     let name = String(format: "NavigationFlowScreen-%@-%@", eventName, self.navigationInstanceId)
     let args: [AnyObject]
@@ -159,6 +163,15 @@ class ReactViewController: UIViewController {
   public func dismiss(_ payload: [String: AnyObject], animated: Bool?) {
     leavePayload = payload
     self.delegate?.didDismiss(payload)
+  }
+
+  private func updateView() {
+    if let hidden = self.options["isNavigationBarHidden"] as? Bool ?? self.navigationController?.isNavigationBarHidden {
+      self.navigationController?.setNavigationBarHidden(hidden, animated: true)
+    }
+    if let isBackGestureEnabled = self.options["backGestureEnabled"] as? Bool ?? self.navigationController?.interactivePopGestureRecognizer?.isEnabled {
+      self.navigationController?.interactivePopGestureRecognizer?.isEnabled = isBackGestureEnabled
+    }
   }
 }
 
