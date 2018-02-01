@@ -38,17 +38,17 @@ class ReactNavigationFlow: NSObject {
   
   @objc
   public func push(_ screenName: String, props: [String: AnyObject], options: [String: AnyObject], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-    // TODO
     print("RNNF: Push has been called \(screenName) \(props) \(options)")
-    guard
-      let vc = self.navigationGateway.topViewController() as? ReactViewController
-      else { return }
-    let nextVC = ReactViewController(sceneName: screenName, props: props, options: options)
-    nextVC.delegate = vc.delegate
-    nextVC.modalPresentationStyle = getModalPresentationStyle(from: options)
-    self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
+
     // TODO - Pass data
     DispatchQueue.main.async {
+      guard
+        let vc = self.navigationGateway.topViewController() as? ReactViewController
+        else { return }
+      let nextVC = ReactViewController(sceneName: screenName, props: props, options: options)
+      nextVC.delegate = vc.delegate
+      nextVC.modalPresentationStyle = getModalPresentationStyle(from: options)
+      self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
       vc.navigationController?.pushViewController(nextVC, animated: props["animated"] as? Bool ?? true)
     }
   }
@@ -56,12 +56,12 @@ class ReactNavigationFlow: NSObject {
   @objc
   public func pop(_ payload: [String: AnyObject], options: [String: AnyObject]) {
     print("RNNF: Pop has been called \(payload) \(options)")
-    guard
-      let vc = self.navigationGateway.topViewController() as? ReactViewController
-      else { return }
-
-    let nav = self.navigationGateway.topNavigationController()
     DispatchQueue.main.async {
+      guard
+        let vc = self.navigationGateway.topViewController() as? ReactViewController
+        else { return }
+
+      let nav = self.navigationGateway.topNavigationController()
       nav?.popViewController(animated: options["animated"] as? Bool ?? true)
       vc.dismiss(payload, animated: options["animated"] as? Bool ?? true)
     }
@@ -71,16 +71,16 @@ class ReactNavigationFlow: NSObject {
   public func present(_ screenName: String, props: [String: AnyObject], options: [String: AnyObject], resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
     print("RNNF: Present has been called \(screenName) \(props) \(options)")
 
-    guard
-      let vc = self.navigationGateway.topViewController() as? ReactViewController
-      else { return }
-    let nextVC = ReactViewController(sceneName: screenName, props: props, options: options)
-    let navVC = UINavigationController(rootViewController: nextVC)
-    nextVC.delegate = vc.delegate
-    navVC.modalPresentationStyle = getModalPresentationStyle(from: options)
-    self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
     // TODO - Pass data
     DispatchQueue.main.async {
+      guard
+        let vc = self.navigationGateway.topViewController() as? ReactViewController
+        else { return }
+      let nextVC = ReactViewController(sceneName: screenName, props: props, options: options)
+      let navVC = UINavigationController(rootViewController: nextVC)
+      nextVC.delegate = vc.delegate
+      navVC.modalPresentationStyle = getModalPresentationStyle(from: options)
+      self.navigationGateway.registerNavigationFlow(nextVC, resolve: resolve, reject: reject)
       vc.present(navVC, animated: props["animated"] as? Bool ?? true, completion: nil)
     }
   }
@@ -88,11 +88,11 @@ class ReactNavigationFlow: NSObject {
   @objc
   public func dismiss(_ payload: [String: AnyObject], options: [String: AnyObject]) {
     print("RNNF: Dismiss has been called \(payload) \(options)")
-    guard
-      let vc = self.navigationGateway.topViewController() as? ReactViewController
-      else { return }
 
     DispatchQueue.main.async {
+      guard
+        let vc = self.navigationGateway.topViewController() as? ReactViewController
+        else { return }
       vc.dismiss(animated: options["animated"] as? Bool ?? true, completion: nil)
       vc.dismiss(payload, animated: options["animated"] as? Bool ?? true)
     }
